@@ -13,4 +13,6 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties
 public class FieldMetaDataDto {
     private String name;
+    private FieldInputType type;
+    private Boolean mandatory;
 }

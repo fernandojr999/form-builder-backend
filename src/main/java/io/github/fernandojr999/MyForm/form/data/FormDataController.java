@@ -22,4 +22,8 @@ public class FormDataController {
         formDataUseCase.save(formId, content);
     }
 
+    @DeleteMapping("/{dataId}")
+    public void delete(@PathVariable UUID dataId){
+        formDataUseCase.delete(dataId);
+    }
 }

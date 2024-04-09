@@ -5,6 +5,7 @@ import io.github.fernandojr999.MyForm.form.metadata.FormMetaDataRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,7 +17,14 @@ public class FormDataUseCase {
     FormMetaDataRepository formMetaDataRepository;
 
     public List<String> getAllByForm(UUID formDataId){
-        return formDataRepository.findByMetaDataId(formDataId).stream().map(FormData::getContent).toList();
+        List<String> res = new ArrayList<>();
+        List<FormData> datas = formDataRepository.findByMetaDataId(formDataId);
+        datas.forEach(formData -> {
+            String t = formData.getContent().substring(1);
+            t = "{\"id\": \""+formData.getId()+"\", "+t;
+            res.add(t);
+        });
+        return res;
     }
 
     public void save(UUID formId,  String content){
@@ -28,5 +36,9 @@ public class FormDataUseCase {
                 .build();
 
         formDataRepository.save(formData);
+    }
+
+    public void delete(UUID dataId){
+        formDataRepository.deleteById(dataId);
     }
 }
